@@ -1,0 +1,180 @@
+||==================================================||
+||<*>|| Python Firebase
+||==================================================||
+
+|*| pip Installer :
+
+	pip install firebase-admin
+
+____________________________________________________________________________________________________
+|*| Download Firebase Certificate Json :
+
+=> Goto "Firebase Console"
+=> Goto "Settings" => "Project Settings"
+=> Goto "Service Accounts" Tab
+=> Goto "Firebase Admin SDK" on left Nav
+=> Under "Admin SDK configuration snippet" Select "Python"
+=> Click on "Generate new private key"
+=> Click on "Generate key" and download
+=> Store this Json file securely, because your new key can't be recovered if lost
+=> Copy your Json file to proj folder and rename as you need.
+--------------------------------------------------
+|*| Init Firebase with Credentials :
+
+import firebase_admin
+from firebase_admin import credentials
+
+GfbSdkCfgVar = credentials.Certificate('GfbAdmSdkCfg.json')
+
+firebase_admin.initialize_app(GfbSdkCfgVar, {})
+
+====================================================================================================
+[--------------------------------------------------]
+|<*>| Firebase Databse - Fdb :
+[--------------------------------------------------]
+
+|*| Init Firebase with Credentials with db url :
+
+	import firebase_admin
+	from firebase_admin import credentials, db
+
+	GfbSdkCfgVar = credentials.Certificate('GfbAdmSdkCfg.json')
+
+	firebase_admin.initialize_app(GfbSdkCfgVar, {
+	    'databaseURL': 'https://tuttul-be4f1.firebaseio.com/'
+	})
+
+	FdbRefVap = db.reference('/')
+
+--------------------------------------------------
+|*| Ref for root :
+
+	FdbRefVap = db.reference('/')
+
+|*| Ref for bucket :
+
+	FdbRefVap = db.reference('NamBkt')
+
+|*| Ref for child bucket :
+
+	FdbRefVap = db.reference('NamSupBkt').child('NamSubBkt')
+
+----------------------------------------------------------------------------------------------------
+|*| Set values : 
+[=] Set wil always remove prev data and set with new object data passed
+
+	FdbRefVap.set({"NamVak":"NamVal"})
+
+--------------------------------------------------
+|*| Set for child key :
+[=] If child key not found then Child Key wil b created
+
+	FdbRefVap.child("NamSupVak").set(
+		{"NamSubVak":"NamSubVal"})
+
+--------------------------------------------------
+|*| Set multi values :
+
+	FdbRefVap.set({
+		"NamAidVak":"NamAidVal",
+		"NamBidVak":"NamBidVal",
+		"NamCidVak":"NamCidVal",
+		"NamXidVak":"NamXidVal"})
+
+____________________________________________________________________________________________________
+|*| Update : Insert New value or Update value :
+
+	FdbRefVap.update({"NamVak":"NamVal"})
+
+--------------------------------------------------
+|*| Update for child key :
+[=] If child key not found then Child Key wil b created
+
+	FdbRefVap.child("NamSupVak").update(
+		{"NamSubVak":"NamSubVal"})
+
+--------------------------------------------------
+|*| Update multi values :
+
+	FdbRefVap.update({
+		"NamAidVak":"NamAidVal",
+		"NamBidVak":"NamBidVal",
+		"NamCidVak":"NamCidVal",
+		"NamXidVak":"NamXidVal"})
+
+____________________________________________________________________________________________________
+|*| Push : Insert New value by auto gen unique key :
+
+	FdbRefVap.push({
+		"NamVak":"NamVal"})
+
+--------------------------------------------------
+|*| Push for child key :
+[=] If child key not found then Child Key wil b created
+
+	FdbRefVap.child("NamSupVak").push({
+		"NamVak":"NamVal"})
+
+--------------------------------------------------
+|*| Insert multi New values by auto gen one unique key :
+
+	FdbRefVap.push({
+		"NamAidVak":"NamAidVal",
+		"NamBidVak":"NamBidVal",
+		"NamCidVak":"NamCidVal",
+		"NamXidVak":"NamXidVal"})
+
+____________________________________________________________________________________________________
+|*| Get all Data :
+
+	FdbResVar = FdbRefVap.get()
+
+--------------------------------------------------
+|*| Get Data from Child or key :
+
+	ResVar = FdbRefVap.child("NamVak").get()
+
+--------------------------------------------------
+|*| Get required info from Bucket Json data :
+
+	FdbResVar = FdbRefVap.child("NamBkt").get()
+	if("NamVak" in FdbResVar):
+		ResVar = FdbResVar["NamVak"]
+		print(ResVar)
+	else:
+		print("Data not found")
+
+----------------------------------------------------------------------------------------------------
+|*| Get data by Order by Key
+	
+	ResVar = FdbRefVap.order_by_key().get()
+	for ItmVar, IdxVar in ResVar.items():
+		print(ItmVar, IdxVar)
+
+--------------------------------------------------
+|*| Get data by Order by Value
+
+	ResVar = FdbRefVap.order_by_value().get()
+	
+--------------------------------------------------
+|*| Get data by Order by a Specified Child Key
+
+	ResVar = FdbRefVap.order_by_child("NamBkt").get()
+
+____________________________________________________________________________________________________
+|*| Delete Data :
+	
+	FdbRefVap.child("NamVak").delete()
+
+____________________________________________________________________________________________________
+|*| Db Change Listener :
+
+	def NamFdbChjFnc(EvtRsgVar):
+		RcdVakVar = EvtRsgVar.path.strip("/")
+		RcdValVar = EvtRsgVar.data
+		if(RcdValVar["NamSubVak"]=="NamSubVal"):
+			print("Got Data")
+
+	FdbRefVap.listen(NamFdbChjFnc)
+
+====================================================================================================

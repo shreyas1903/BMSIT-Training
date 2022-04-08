@@ -1,0 +1,525 @@
+[==================================================]
+|<*>| Python Gui : With Tkinter Lib
+[==================================================]
+|*| Import Tkinter Lib
+
+from tkinter import *
+
+-------------------------
+|::| If Import fails try following :
+
+try:
+  from Tkinter import *
+except ImportError:
+  from tkinter import *
+
+----------------------------------------------------------------------------------------------------
+|*| Creating basic empty window :
+
+from tkinter import *
+
+SupWdwVav = Tk()
+
+SupWdwVav.title("Ttl Txt")
+
+SupWdwVav.mainloop()
+
+-------------------------
+|=> Set Size of the screen :
+
+SupWdwVav.geometry('500x500')
+
+|=> Set min resSize of the screen :
+
+SupWdwVav.minsize(200,100)
+
+-------------------------
+|=> Set background color :
+
+SupWdwVav.configure(background="pink")
+
+-------------------------
+|=> Set App Icon : (Icon shud be in ico format)
+
+SupWdwVav.iconbitmap(r'C:\NamPth\NamFyl.ico')
+
+____________________________________________________________________________________________________
+|*| Creating Label :
+
+	Label(SupWdwVav, text="Enter Imp Inf").pack()
+
+[O]
+
+	NamLblVav = Label(SupWdwVav, text="Enter Imp Inf")
+	NamLblVav.pack()
+
+--------------------------------------------------
+|=> Adding Foreground and background color :
+
+	Label(SupWdwVav, text="Enter Imp Inf", bg="yellow", fg="brown")
+
+--------------------------------------------------
+|=> Set Font :
+
+	Label(SupWdwVav, text="Enter Imp Inf", font="arial 16 bold")
+
+--------------------------------------------------
+|=> Set Border :
+
+	Label(SupWdwVav, text="Enter Imp Inf", bd=8, relief="raised")
+
+	|=> relief = "solid" | "flat" | "raised" | "sunken" | "ridge" | "groove"
+
+--------------------------------------------------
+|=> Set Width and Height :
+*> Width is number letters needed
+*> Height is number of lines needed
+
+	Label(SupWdwVav, text="Enter Imp Inf", width=10, height=1)
+
+--------------------------------------------------
+|=> Set padding : Dist btw text and border
+
+	Label(SupWdwVav, text="Enter Imp Inf", padx=10)
+[O]
+	Label(SupWdwVav, text="Enter Imp Inf", pady=10)
+[O]
+	Label(SupWdwVav, text="Enter Imp Inf", padx=10, pady=10)
+
+--------------------------------------------------
+|=> Set alignment of Text inside Element:
+
+	Label(SupWdwVav, text="Enter Imp Inf", width=50,height=5, anchor=N).pack()
+
+	|=> anchor = N | E | S | W | NE | NW | SE | SW | CENTER
+
+--------------------------------------------------
+|=> Set justify of Text inside Element:
+
+	Label(SupWdwVav, text="TstTxt\nTstTxt\nTstTxt", justify=LEFT).pack()
+
+	|=> justify = LEFT | RIGHT | CENTER
+
+--------------------------------------------------
+|*| Adding an Image to label:
+|=> Supports only Gif images. So convert jpg and png images to Gif and use
+
+	NamImjVav = PhotoImage(file="NamImj.gif")
+	Label(SupWdwVav, image=NamImjVav).pack()
+
+----------------------------------------------------------------------------------------------------
+|*| Get the properties of View Elements :
+
+	NamTxtVar = NamVav['text']
+
+	NamFntVar = NamVav['font']
+
+	NamBdrVar = NamVav['bd']
+
+	NamWytVar = NamVav['width']
+
+	NamHytVar = NamVav['height']
+
+	NamPdxVar = NamVav['padx']
+
+	NamPdyVar = NamVav['pady']
+
+	NamPsnVar = NamVav['anchor']
+
+	NamAlnVar = NamVav['justify']
+
+--------------------------------------------------
+|*| Set the properties of View Elements :
+
+	NamVav['text'] = "Tst Txt"
+
+	NamVav['font'] = "arial 16 bold"
+
+	NamVav['bd'] = 8
+
+	NamVav['width'] = 50
+
+	NamVav['height'] = 2
+
+	NamVav['padx'] = 10
+
+	NamVav['pady'] = 10
+
+	NamVav['anchor'] = N | E | S | W | NE | NW | SE | SW | CENTER
+
+	NamVav['justify'] = LEFT | RIGHT | CENTER
+
+____________________________________________________________________________________________________
+|*| Setting Position using Pack : Used to align and strech UI Elements
+	(Wil be common for all View elements) :
+
+	.pack(side = TOP)
+	.pack(side = BOTTOM)
+	.pack(side = LEFT)
+	.pack(side = RIGHT)
+
+-------------------------
+|=> Expand to fit horizontally :
+
+	.pack(side=TOP, fill="both")
+
+-------------------------
+|=> Expand add padding :
+
+	.pack(side="top", fill="both", padx=10, pady=10)
+
+	-------------------------
+|=> Expand to fit vertically in given space :
+
+	.pack(side="top", fill="both", expand=True, padx=10, pady=10)
+
+----------------------------------------------------------------------------------------------------
+|*| Setting Position using grids :
+
+	.grid(row=1,column=0)
+
+-------------------------
+|=> Setting grid position :
+
+	.grid(row=1,column=0, sticky=W)		# Stick to West
+|O|
+	.grid(row=1,column=0, sticky=E)		# Stick to East
+	
+-------------------------
+|=> Setting columnspan :
+
+	.grid(row=1,column=0, columnspan=2)
+
+----------------------------------------------------------------------------------------------------
+|*| Setting Position using palce :
+
+	.place(x=50, y=50)
+
+	-------------------------
+|=> Set Relative position :
+
+	.place(relx=.5, rely=.5)
+
+	-------------------------
+|=> Set Relative position with anchor :
+
+	.place(relx=.5, rely=.5, anchor="center")
+
+====================================================================================================
+|*| Creating a Text Box for displaying output :
+
+	NamOptTxtBoxVav = Text(SupWdwVav, width=50, height=1)
+	NamOptTxtBoxVav.grid(row=3,column=0)
+
+-------------------------
+|=> Inserting Text :
+
+	NamOptTxtBoxVav.insert(END,"Hello Human")
+
+-------------------------
+|=> Deleting Data :
+
+	OptTxtBoxVav.delete(0.0,END)
+
+-------------------------
+|=> Adding Word Wrap :
+
+	OptTxtBoxVav = Text(SupWdwVav, width=50, height=2, wrap=WORD)
+
+-------------------------
+|=> Setting all parameters :
+
+	OptTxtBoxVav = Text(SupWdwVav, width=50, height=2, bg="yellow", fg="purple", wrap=WORD)
+
+____________________________________________________________________________________________________
+|*| Creating Input box and get text from it :
+
+	NamIptTxtBoxVav = Entry(SupWdwVav)
+	NamIptTxtBoxVav.grid(row=2, column=0)
+
+-------------------------
+|=> Get Text from input :
+
+	NamTxtVar = NamIptTxtBoxVav.get()
+
+-------------------------
+|=> Setting all parameters :
+	
+	NamIptTxtBoxVav = Entry(SupWdwVav, width=20, bg="yellow", fg="purple")
+
+--------------------------------------------------
+|*| Creating Password Input box :
+
+	NamPwdTxtBoxVav = Entry(SupWdwVav, show="*")
+
+____________________________________________________________________________________________________
+|*| Creating Button :
+
+	def NamBtnKlkFnc():
+	    print("Hello")
+	    # CodTdo
+
+	Button(SupWdwVav, text="Submit", width=10, command=NamBtnKlkFnc).pack()
+
+-------------------------
+|=> Setting all parameters :
+		
+	Button(SupWdwVav, text="Submit", width=10, command=NamBtnKlkFnc, bg="yellow", fg="purple").pack()
+
+--------------------------------------------------
+|*| Button with Image :
+
+	NamImjVav = PhotoImage(file="NamImj.gif")
+	Button(SupWdwVav, image = NamImjVav).pack()
+
+--------------------------------------------------
+|*| Button with Text and Image :
+|*> compound = LEFT | RIGHT | TOP | BOTTOM
+
+	NamImjVav = PhotoImage(file="NamImj.gif")
+	Button(SupWdwVav, text = "TtlTxt", image = NamImjVav, compound = RIGHT).pack()
+
+----------------------------------------------------------------------------------------------------
+|*| Close button:
+
+	def KosBtnKlkFnc():
+	    SupWdwVav.destroy()
+	    exit()
+
+	Button(SupWdwVav, text="Close", width=10, command=KosBtnKlkFnc).pack()
+
+====================================================================================================
+|<*>| Message Box :
+
+|=> Import Message Box
+
+	from tkinter import messagebox
+[O]
+	from tkinter import messagebox as MsgBoxVap
+[O]
+	import tkinter.messagebox as MsgBoxVap
+
+--------------------------------------------------
+|=> Info Msg Box :
+
+	MsgBoxVap.showinfo("Ttl Txt","Dtl Txt")
+
+-------------------------
+|=> Warning Msg Box :
+
+	MsgBoxVap.showwarning("Ttl Txt","Dtl Txt")
+
+-------------------------
+|=> Error Msg Box :
+
+	MsgBoxVap.showerror("Ttl Txt","Dtl Txt")
+
+--------------------------------------------------
+|=> Yes No Message Box :
+
+	MsgBoxResVar = MsgBoxVap.askyesno("Ttl Txt","Dtl Txt")
+    if(MsgBoxResVar > 0):
+        print("Yop")
+    else:
+        print("Nop")
+
+====================================================================================================
+|<*>| Tree View :
+
+|=> Import lib :
+
+	from tkinter import ttk
+[O]
+	from tkinter import ttk as TtkGuiVap
+[O]
+	import tkinter.ttk as TtkGuiVap
+
+--------------------------------------------------
+|=> Dev Tree View :
+
+	NamTreVav = TtkGuiVap.Treeview(SupWdwVav)
+
+--------------------------------------------------
+|=> Add the Treeview to Sup Window :
+
+	NamTreVav.pack()
+
+--------------------------------------------------
+|=> Insert an item :
+
+	NamTreVav.insert('', 'end', text='Xid Lys Itm')
+[O]
+	NamTreVav.insert('', 0, text='Xid Lys Itm')
+
+-------------------------
+|=> Get id of the Inserted item :
+
+	TblRolUidVar = NamTreVav.insert('', 'end', text='Xid Lys Itm')
+
+-------------------------
+|=> Set The Uid of the item
+
+	NamTreVav.insert('', 'end', 'NamItmUid', text='Xid Lys Itm')
+--------------------------------------------------
+|*| Insert an Sub Item :
+
+	NamTreVav.insert('NamItmUid', 'end', 'NamSubItmUid', text='Xid Lys Itm')
+
+-------------------------
+|*| Insert an Sub Sub Item :
+
+	NamTreVav.insert('NamSubItmUid', 'end', 'NamSubSubItmUid', text='Xid Lys Itm')
+
+--------------------------------------------------
+|*| Insert an Item with Image Icon :
+
+	IcoImjVar = PhotoImage(file="NamImj.gif").subsample(10,10)
+
+	NamTreVav.insert('NamSubItmUid', 'end', text='Xid Lys Itm', image=IcoImjVar)
+
+----------------------------------------------------------------------------------------------------
+|*| Config the height of the treeview
+|*> height is calc as number of Items to be displayed
+
+	NamTreVav.config(height = ItmCwtVar)
+[O]
+	NamTreVav.config(height = 20)
+
+--------------------------------------------------
+|*| Config the Tree to be expanded at start
+
+	NamTreVav.item('NamItmUid',open=True)
+-------------------------
+|*| Check the Config status of expantion of item
+
+	NamTreVav.item('NamItmUid','open')
+
+----------------------------------------------------------------------------------------------------
+|*| Move the Item to new position or under another item
+
+	NamTreVav.move('NamItmUid','OdrItmUid','end')
+
+-------------------------
+|=> Move to the parent Tree:
+
+	NamTreVav.move('LatItmUid','','end')
+
+-------------------------
+|=> Move in same Tree level :
+
+	NamTreVav.move('NamItmUid','','NewIdxVal')
+
+--------------------------------------------------
+|*| Detach an Item from Tree :
+|*> The item detached wil remain hidden and can be inserted again
+
+	NamTreVav.detach('NamItmUid')
+
+--------------------------------------------------
+|*| Delete an Item :
+
+	NamTreVav.delete('NamItmUid')
+
+____________________________________________________________________________________________________
+|<*>| Table View :
+
+	NamTblVav = TtkGuiVap.Treeview(WdwVav, columns=("NamKol","MblKol","MylKol"))
+
+--------------------------------------------------
+|=> Set Column properties using index values:
+
+	NamTblVav.column('#0',width=0,minwidth=0)
+	NamTblVav.column('#1',width=100,minwidth=0)
+	NamTblVav.column('#2',width=100,minwidth=0)
+	NamTblVav.column('#2',width=100,minwidth=0)
+
+[O] Set Column properties using column names :
+
+	NamTblVav.column('NamKol',width=100,minwidth=0)
+	NamTblVav.column('MblKol',width=100,minwidth=0)
+	NamTblVav.column('MylKol',width=100,minwidth=0)
+
+--------------------------------------------------
+|=> Align the text of the Column using anchor :
+|*> anchor can be  : n, ne, e, se, s, sw, w, nw, or center
+
+	NamTblVav.column('NamKol',width=100,minwidth=0, anchor='center')
+
+--------------------------------------------------
+|*| Set Column Headings :
+
+	NamTblVav.heading("NamKol",text="Name")
+	NamTblVav.heading("MblKol",text="Mobile")
+	NamTblVav.heading("MylKol",text="Email")
+
+--------------------------------------------------
+|=> Add Table View to the Main Window :
+
+	NamTblVav.grid(row=0,columnspan=4,sticky='nsew')
+
+[O]
+
+	NamTblVav.pack()
+
+--------------------------------------------------
+|=> Insert a row of values :
+	
+	NamTblVav.insert('', IdxVal, value=("User Name", 9876543210, "usrnam@yahoo.com"))
+[O]
+	NamTblVav.insert('', 'end', value=("User Name", 9876543210, "usrnam@yahoo.com"))
+
+-------------------------
+|=> Set The Uid for the Row
+
+	NamTblVav.insert('', 'end', "NamRolUid", value=("User Name", 9876543211, "usrnam@yahoo.com"))
+
+--------------------------------------------------
+|=> Update or Set new Value :
+
+	NamTblVav.set("NamRolUid","NamKol","New Tst Txt")
+
+--------------------------------------------------
+|=> detach a row :
+
+	NamTblVav.detach("NamRolUid")
+
+	-------------------------
+|=> Delete a row :
+
+	NamTblVav.delete("NamRolUid")
+
+----------------------------------------------------------------------------------------------------
+|*| Add Event Listner to the Selected Item
+
+	def TblRowSltFnc(event):
+	    RolSltUidVar = NamTblVav.selection()
+
+	    print(RolSltUidVar)
+
+	NamTblVav.bind("<<TreeviewSelect>>",TblRowSltFnc)
+
+----------------------------------------------------------------------------------------------------
+|*| Config to select only one item at a time :
+
+	NamTblVav.config(selectmode = 'browse')
+
+[O] Config to select no item :
+
+	NamTblVav.config(selectmode = 'none')
+
+--------------------------------------------------
+|*| Add Ids to selected Array :
+
+	NamTblVav.selection_add("NamRolUid")
+
+	-------------------------
+|*| Remove Ids from selected Array :
+
+	NamTblVav.selection_remove("NamRolUid")
+
+	-------------------------
+|*| Toggle Ids from selected Array :
+
+	NamTblVav.selection_toggle("NamRolUid")
+
+====================================================================================================

@@ -1,0 +1,287 @@
+[==================================================]
+|<*>| NodeJs - Express package :
+[==================================================]
+|*| Install flask module :
+
+	pip install flask
+	
+--------------------------------------------------
+|*| Importing flask module :
+
+from flask import Flask
+SvrMgrVaj = Flask(__name__)
+
+====================================================================================================
+|*| Init Server :
+
+from flask import Flask
+SvrMgrVaj = Flask(__name__)
+
+# [==] CodTdo
+
+if __name__ == '__main__':
+    SvrMgrVaj.run(debug=True)
+	
+--------------------------------------------------
+|+> Run Server with debug on and off :
+|*> debug on 	|=> debug=True 		|=> Restart server on save changes
+
+	SvrMgrVaj.run(debug=True)
+
+	-------------------------
+|*> debug off 	|=> debug=False 	|=> Wont restart server on save changes
+
+	SvrMgrVaj.run(debug=False)
+	
+--------------------------------------------------
+|+> Run Server with diff port number :
+
+	SvrMgrVaj.run(debug=True, port=5050)
+
+----------------------------------------------------------------------------------------------------
+|*| Handle home page req with with Get
+|*> All Routes declaration shud be before SvrMgrVaj.run
+
+@SvrMgrVaj.route('/', methods=['GET'])
+def NamApiFnc():
+    return "<h1>Welcome to Website</h1>"
+
+--------------------------------------------------
+|+> Response handler with plain Text header :	
+
+from flask import Flask, make_response
+
+-------------------------
+
+	ResVar = make_response("Welcome to Website")
+	ResVar.mimetype = "text/plain"
+	return ResVar
+
+--------------------------------------------------
+|+> Response handler with plain HTML header :
+
+	ResVar = make_response("<h1>Welcome to Website</h1>")
+	ResVar.mimetype = "text/html"
+	return ResVar
+
+--------------------------------------------------
+|+> Response handler with plain HTML header with Status Code :
+
+	ResVar = make_response("<h1>Welcome to Website</h1>", 202)
+	ResVar.mimetype = "text/html"
+	return ResVar
+____________________________________________________________________________________________________
+|*| Send HTML File :
+|+> Create "templates" Folder
+|+> Inside "templates" Folder => Create "NamPej.html" File
+|*> HTML files shud be inside "templates" folder
+
+--------------------------------------------------
+from flask import Flask, render_template
+
+	-------------------------
+
+	return render_template("NamPej.html")
+
+--------------------------------------------------
+|+> Passing Var to HTML :
+
+|+> Add in py code :
+
+	return render_template("NamPej.html", NamPsgVar="Tst Txt")
+
+-------------------------
+|+> Add in html code :
+
+	<h1>The Variable Received : {{NamPsgVar}}</h1>
+
+--------------------------------------------------
+|+> Passing more than one Var to HTML :
+
+|+> Add in py code :
+
+	return render_template("NamPej.html", NamPsgVar="Tst Txt", NumPsgVar=123)
+
+-------------------------
+|+> Add in html code :
+
+	<h1>The Variable Received : {{NamPsgVar}} {{NumPsgVar}}</h1>
+
+--------------------------------------------------
+|+> Passing Object Var to HTML :
+
+|+> Add in py code :
+
+	return render_template("NamPej.html", NamPsgVar={"NamVak":"NamVal"})
+
+-------------------------
+|+> Add in html code :
+
+	<h1>The Variable Received : {{NamPsgVar.NamVak}} </h1>
+
+____________________________________________________________________________________________________
+|*| GET, POST, PUT and DELETE Methods :
+
+@SvrMgrVaj.route('/NamApi', methods=['GET'])
+def NamGquApiFnc():
+    return "<h1>Welcome to Gqu Method</h1>"
+
+@SvrMgrVaj.route('/NamApi', methods=['POST'])
+def NamNquApiFnc():
+    return "<h1>Welcome to Nqu Method</h1>"
+
+@SvrMgrVaj.route('/NamApi/<UidVar>', methods=['PUT'])
+def NamUquApiFnc(UidVar):
+    return "<h1>Welcome to Uqu Method with Uid : "+ UidVar + " </h1>"
+
+@SvrMgrVaj.route('/NamApi/<UidVar>', methods=['DELETE'])
+def NamDquApiFnc(UidVar):
+    return "<h1>Welcome to Dqu Method with Uid : "+ UidVar + " </h1>"
+	
+--------------------------------------------------
+|+> Same API handle all req :
+
+@SvrMgrVaj.route('/NamApi', methods=['GET','POST'])
+def NamApiFnc():
+	return "<h1>Requested method</h1>"
+
+[O]
+
+@SvrMgrVaj.route('/NamApi', methods=['GET','POST','PUT','DELETE'])
+def NamApiFnc():
+	return "<h1>Requested method</h1>"
+
+____________________________________________________________________________________________________
+|*| Send Json Object or Json Array :
+
+from flask import Flask, jsonify
+
+	-------------------------
+
+	return jsonify({"NamVak":"NamVal"})
+
+[O]
+	return jsonify(NamJsnVar)
+
+--------------------------------------------------
+|+> Return with Status Code :
+
+	return jsonify(NamJsnVar), 202
+
+----------------------------------------------------------------------------------------------------
+|*| Receive Json Data in Post Method : 
+
+from flask import Flask, jsonify, request
+
+-------------------------
+@SvrMgrVaj.route('/NamApi', methods=['POST'])
+def NamApiFnc():
+	DtaRsgVar = request.get_json()
+	NamVar = DtaRsgVar['NamVak']
+
+	return jsonify(DtaRsgVar)
+
+--------------------------------------------------
+|*| Receive Form Data in Post Method :	    
+
+	DtaRsgVar = request.form.to_dict()
+
+--------------------------------------------------
+|*| Receive File Upload in Post Method : 
+
+	FylVaj = request.files['NamFylVak']
+	FylVaj.save("UldFdr/"+FylVaj.filename)
+
+--------------------------------------------------
+|*| Receive Data from header :
+
+    HdrDtaVar = request.headers['NamVak']
+
+--------------------------------------------------
+|*| Receive Data from Url Params :
+
+@SvrMgrVaj.route('/NamApi/<UidVar>', methods=['PUT', 'DELETE'])
+def NamApiFnc(UidVar):
+	print(UidVar)
+
+====================================================================================================
+|*| CRUD Operaton on Array var:
+
+	NamAryVar=["AidVal","BidVal","CidVal","XidVal"];
+
+	@SvrMgrVaj.route('/GquAllNamApi', methods=['GET'])
+	def GquAllNamApiFnc():
+		return jsonify(NamAryVar)
+
+	@SvrMgrVaj.route('/GquOneNamApi/<int:IdxVak>', methods=['GET'])
+	def GquOneNamApiFnc(IdxVak):
+		return jsonify(NamAryVar[IdxVak])
+
+	@SvrMgrVaj.route('/SquNamApi', methods=['POST'])
+	def SquNamApiFnc():
+		NamItmVar = request.get_json()
+		NamAryVar.append(NamItmVar["NamVak"])
+
+		return jsonify(NamAryVar)
+
+	@SvrMgrVaj.route('/UquNamApi/<int:IdxVak>', methods=['PUT'])
+	def UquNamApiFnc(IdxVak):
+		NamItmVar = request.get_json()
+		NamAryVar[IdxVak] = NamItmVar["NamVak"]
+		
+		return jsonify(NamAryVar)
+
+	@SvrMgrVaj.route('/DquNamApi/<int:IdxVar>', methods=['DELETE'])
+	def DquNamApiFnc(IdxVar):
+		del NamAryVar[IdxVar]
+		return jsonify(NamAryVar)
+
+____________________________________________________________________________________________________
+|*| CRUD Operaton on JSON Array var and Uid :
+
+	NamJryVar = [
+		{"UidVak":1, "NamVak":"AidVal"},
+		{"UidVak":2, "NamVak":"BidVal"},
+		{"UidVak":3, "NamVak":"CidVal"},
+		{"UidVak":4, "NamVak":"XidVal"}
+	]
+
+	@SvrMgrVaj.route('/GquAllNamApi', methods=['GET'])
+	def GquAllNamApiFnc():
+		return jsonify(NamJryVar)
+
+	@SvrMgrVaj.route('/GquOneNamApi/<int:UidVak>', methods=['GET'])
+	def GquOneNamApiFnc(UidVak):
+		for ItmVar in NamJryVar:
+			if ItmVar['UidVak'] == UidVak:
+				return jsonify(ItmVar)
+		return jsonify({"ErrVak":"Not Found"}), 404
+
+	@SvrMgrVaj.route('/SquNamApi', methods=['POST'])
+	def SquNamApiFnc():
+		NamItmVar = request.get_json()
+		NamJryVar.append(NamItmVar)
+
+		return jsonify(NamJryVar), 201
+
+	@SvrMgrVaj.route('/UquNamApi/<int:UidVak>', methods=['PUT'])
+	def UquNamApiFnc(UidVak):
+		ReqItmVar = request.get_json()
+		
+		for ItmVar in NamJryVar:
+			if ItmVar['UidVak'] == UidVak:
+				ItmVar['NamVak'] = ReqItmVar['NamVak']
+				return jsonify(NamJryVar)
+		
+		return jsonify({"ErrVak":"Not Found"}), 404
+
+	@SvrMgrVaj.route('/DquNamApi/<int:UidVak>', methods=['DELETE'])
+	def DquNamApiFnc(UidVak):
+		for ItmVar in NamJryVar:
+			if ItmVar['UidVak'] == UidVak:
+				NamJryVar.remove(ItmVar)
+				return jsonify(NamJryVar)
+
+		return jsonify({"ErrVak":"Not Found"}), 404
+
+====================================================================================================
